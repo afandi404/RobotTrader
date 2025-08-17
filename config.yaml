@@ -1,0 +1,46 @@
+# Default configuration
+general:
+  mode: paper            # paper | live | backtest
+  exchange: binance      # binance | bybit | okx (supported by ccxt)
+  symbol: ETH/USDT
+  timeframe: 30m
+  leverage: 2            # if your market supports it
+  max_open_trades: 1
+  log_level: INFO
+
+strategy:
+  bb:
+    window: 21
+    dev: 2.1             # you used 2.17; feel free to adjust
+  rsi:
+    fast: 6
+    mid: 14
+    slow: 24
+    ob: 70
+    os: 30
+  stochrsi:
+    rsi_window: 14
+    stoch_window: 14
+    smooth_k: 3
+    smooth_d: 3
+    ob: 80
+    os: 20
+  # filters
+  use_trend_filter: true   # require price > bb_mid & rsi_slow>50 for longs (inverse for shorts)
+  use_squeeze_filter: false
+
+risk:
+  equity_risk_pct: 0.5     # risk per trade (% of equity)
+  atr_window: 14
+  atr_mult_sl: 1.2         # SL = entry +/- max(ATR*mult, band buffer)
+  band_buffer_pct: 0.15     # % buffer beyond bands for SL
+  take_profit_mode: bands   # bands | rr
+  rr_ratio: 1.5            # if TP mode = rr
+  trailing:
+    enabled: true
+    atr_mult_trail: 1.0
+    activation_rr: 1.0     # activate trailing after RR >= 1
+
+session:
+  trade_days: [1,2,3,4,5,6,7]   # 1=Mon .. 7=Sun
+  trade_hours_utc: [0,24]       # start, end
